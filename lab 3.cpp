@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
 #include <fstream>
 #include <locale>
@@ -7,8 +7,8 @@
 #include <string>
 #include <forward_list>
 #include <conio.h>
+#include <clocale>
 
-double function(double value);
 
 using namespace std;
 
@@ -19,8 +19,8 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     double M_PI = 3.141592653589793238462643;
-    double x, y, *array_x; int i, first_element, second_element;
-    do 
+    double x, y, * array_x; int i, first_element, second_element;
+    do
     {
         system("cls");
         forward_list<double> list_x, list_y;
@@ -29,7 +29,7 @@ int main()
         array_x = new double[11];
         for (i = 0, x = 0; x <= M_PI / 4; x += M_PI / 40, i++) {
             array_x[i] = x;
-            y = function(x);
+            y = sin(cos(x));
             fout << fixed << setprecision(10) << x << "\t" << fixed << setprecision(10) << y << endl;
         }
         fout.close();
@@ -53,7 +53,7 @@ int main()
         {
             x = (array_x[counter] + array_x[counter + 1]) / 2;
             for_x = list_x.emplace_after(for_x, x);
-            for_y = list_y.emplace_after(for_y, function(x));
+            for_y = list_y.emplace_after(for_y, sin(cos(x)));
             for_x++; for_y++;
         }
 
@@ -73,8 +73,8 @@ int main()
                 cout << "Проверьте пожалуйста ввод ещё раз" << endl;
         } while (second_element <= first_element || first_element <= 0 || second_element > 21);
 
-        if (first_element == 1 && second_element == 21) 
-        { 
+        if (first_element == 1 && second_element == 21)
+        {
             list_x.clear(); list_y.clear();
             cout << "\nТеперь список пуст" << endl;
         }
@@ -86,33 +86,29 @@ int main()
             for (int i = 0; i < first_element - 1; i++) { interator_x_1++, iterator_y_1++; }
             for (int i = 0; i <= second_element; i++) { interator_x_2++, iterator_y_2++; }
             list_x.erase_after(interator_x_1++, interator_x_2++); list_y.erase_after(iterator_y_1++, iterator_y_2++);
-         
+
             print(list_x, list_y);
         }
-       
+
 
         cout << "\nНажмите любую клавишу, чтобы продолжить или ESC, чтобы выйти" << endl;
-    }while (_getch() != 27);
+    } while (_getch() != 27);
     return 0;
-}
-
-double function(double value) {
-    return sin(cos(value));
 }
 
 void print(forward_list<double> list_x, forward_list<double> list_y)
 {
     forward_list<double>::iterator for_x = list_x.begin(), for_y = list_y.begin();
 
-    cout <<"№" << setw(12) << "X" << "\t" << setw(14) << "Y" << endl;
+    cout << "№" << setw(12) << "X" << "\t" << setw(14) << "Y" << endl;
     int i = 1;
     while (for_x != list_x.end() && for_y != list_y.end())
-    {   
-        cout << fixed << setprecision(2) << i << "\t" <<  fixed << setprecision(10) << *for_x << "\t" << fixed << setprecision(10) << *for_y << endl;
+    {
+        cout << fixed << setprecision(2) << i << "\t" << fixed << setprecision(10) << *for_x << "\t" << fixed << setprecision(10) << *for_y << endl;
         *for_x++; *for_y++; i++;
     }
 }
-int check() 
+int check()
 {
     char array[5]; int end, value;
     do
