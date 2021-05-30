@@ -115,7 +115,7 @@ double check_value(string message) {
 void cont() {
     do
     {
-        cout << "Для продолжения нажмите Entre" << endl;
+        cout << "Для продолжения нажмите Enter" << endl;
     } while (_getch() == 27);
     system("cls");
 }
