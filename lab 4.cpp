@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include<cstdio>
 #include<fstream>
 #include<string>
@@ -33,7 +33,7 @@ struct Worker
 void add_element(list <Worker>& list_workers);
 void print_list(list<Worker>& list_workers, bool wayBack);
 void delete_element(list<Worker>& list_workers);
-void search_element(list<Worker>& list_workers);
+void search_element(const list<Worker>& list_workers);
 void sort_elements(list<Worker>& list_workers);
 
 bool comp_name(Worker& a, Worker& b);
@@ -178,26 +178,26 @@ void print_list(list<Worker>& list_workers, bool wayBack)
 {
     system("cls");
     if (list_workers.empty())
-        cout << "Список пуст";
-    else
     {
-        int i = 0;
-        cout << "Текущий список:\n" << endl ;
-        cout << "№     Имя        Фамилия       Отчество       Должность      Учитель      Дата рождения     Опыт работы      Зарплата    \n";
-        for (auto iter : list_workers) 
-            cout << left << setw(3) << ++i  << left << setw(14) << iter.name << left << setw(14) << iter.surname << left << setw(14) << iter.patronymic << left << setw(14) << iter.post << left << setw(14) << iter.isTeacher
-            << iter.day << left  <<  "." << iter.month << left << "." << iter.year << right << setw(18) << iter.exp << right << setw(14) << iter.wage << endl;
-        if (wayBack == true && list_workers.size() != 1)
-        {
-            i = 0;
-            list_workers.reverse();
-            cout << "\nТекущий список в обратном порядке:\n" << endl;
-            cout << "№     Имя        Фамилия       Отчество       Должность      Учитель      Дата рождения     Опыт работы      Зарплата    \n";
-            for (auto iter : list_workers)
-                cout << left << setw(3) << ++i << left << setw(14) << iter.name << left << setw(14) << iter.surname << left << setw(14) << iter.patronymic << left << setw(14) << iter.post << left << setw(14) << iter.isTeacher
-                << iter.day << left << "." << iter.month << left << "." << iter.year << right << setw(18) << iter.exp << right << setw(14) << iter.wage << endl;
-            list_workers.reverse();
-        }
+        cout << "Список пуст";
+        return cont();
+    }
+    
+    if (wayBack)
+    {
+        list_workers.reverse();
+    }
+    int i = 0;
+    cout << "Текущий список:\n" << endl ;
+    cout << "№     Имя        Фамилия       Отчество       Должность      Учитель      Дата рождения     Опыт работы      Зарплата    \n";
+    for (auto iter : list_workers) 
+    {
+        cout << left << setw(3) << ++i  << left << setw(14) << iter.name << left << setw(14) << iter.surname << left << setw(14) << iter.patronymic << left << setw(14) << iter.post << left << setw(14) << iter.isTeacher
+        << iter.day << left  <<  "." << iter.month << left << "." << iter.year << right << setw(18) << iter.exp << right << setw(14) << iter.wage << endl;
+    }
+    if (wayBack)
+    {
+        list_workers.reverse();
     }
 }
 
@@ -240,7 +240,7 @@ void delete_element(list<Worker>& list_workers)
     cont();
 }
 
-void search_element(list<Worker>& list_workers)
+void search_element(const list<Worker>& list_workers)
 {
     string s_taker; int i_taker;
     int i = 0; bool exist = false; 
@@ -483,7 +483,7 @@ void delete_wish(list<Worker>& list_workers)
                 eraser = true;
             break;
         }
-        if (eraser == true)
+        if (eraser)
         {
             worker.name = iter.name; worker.surname = iter.surname; worker.patronymic = iter.patronymic; worker.post = iter.post; worker.isTeacher = iter.isTeacher;
             worker.day = iter.day; worker.month = iter.month; worker.year = iter.year; worker.exp = iter.exp; worker.wage = iter.wage;
@@ -503,9 +503,10 @@ string check_string(string message)
         if (value.length() <= 0 || value.length() > 15) 
         {
             fflush(stdin);
-            std::cout << "Введены неверные данные, повторите ввод" << endl << endl;
+            std::cout << "Введены неверные данные, повторите ввод" << std::endl << std::endl;
+            continue;
         }
-    } while (value.length() <= 0 || value.length() > 15);
+    } while (1);
     return value;
 }
 
@@ -520,7 +521,7 @@ int check_int(string message)
         if (strlen(test) > 1 || value <= 0)
         {
             fflush(stdin);
-            std::cout << "Введены неверные данные, повторите ввод" << endl << endl;
+            std::cout << "Введены неверные данные, повторите ввод" << std::endl << std::endl;
         }
     } while (strlen(test) > 1 || value <= 0);
     return value;
@@ -528,7 +529,6 @@ int check_int(string message)
 
 void cont() 
 {
-    char taker;
     cout << "\n\nДля продолжение нажмите Entre" << endl;
-    taker = _getch();
+    char taker = _getch();
 }
